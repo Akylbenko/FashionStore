@@ -1,13 +1,27 @@
-import logo from './logo.svg';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Header from './Components/Header';
 
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+
+import Home from './Pages/Home';
+import Favorites from './Pages/Favorites';
+import Bag from './Pages/Bag';
+import Profile from './Pages/Profile';
+
 function App() {
   return (
-    <div>
+    <Router>
       <Header />
-    </div>
+      <div>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/favorites" element={<Favorites />} />
+          <Route path="/bag" element={<Bag />} />
+          <Route path="/profile" element={<Profile />} />
+        </Routes>
+      </div>
+    </Router>
   );
 }
 
