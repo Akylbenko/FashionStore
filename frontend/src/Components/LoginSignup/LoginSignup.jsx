@@ -79,21 +79,21 @@ export default function LoginSignup() {
         </div>
 
         <div className='submit-container'>
-
+          {/* Левая кнопка - для регистрации */}
           <div
             className={action === "Вход" ? "submit gray" : "submit"}
-            onClick={() => setAction("Регистрация")}
+            onClick={() => action === "Регистрация" ? register : setAction("Регистрация")}
           >
             Зарегистрироваться
           </div>
 
+          {/* Правая кнопка - для входа */}
           <div
             className={action === "Регистрация" ? "submit gray" : "submit"}
-            onClick={action === "Вход" ? login : register}
+            onClick={() => action === "Вход" ? login : setAction("Вход")}
           >
-            {action === "Вход" ? "Войти" : "Создать аккаунт"}
+            Войти
           </div>
-
         </div>
 
       </div>

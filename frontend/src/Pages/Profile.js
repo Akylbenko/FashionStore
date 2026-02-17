@@ -1,11 +1,14 @@
-import React, { Component } from 'react'
+import React from "react"
+import { logout } from "../services/auth"
 
-export default class Profile extends Component {
-  render() {
-    return (
-      <div>
-        Профиль.
-      </div>
-    )
-  }
+export default function Profile() {
+  return (
+    <div>
+      <h1>Профиль</h1>
+
+      <button onClick={logout}>
+        Выйти
+      </button>
+    </div>
+  )
 }
