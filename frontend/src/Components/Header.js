@@ -32,7 +32,7 @@ export default class Header extends Component {
                 className="d-inline-block align-top"
                 alt="logo"
               />
-              . Indie Ease
+              Indie-Ease
             </Navbar.Brand>
 
             <Navbar.Toggle aria-controls="responsive-navbar-nav" />

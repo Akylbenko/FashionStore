@@ -1,6 +1,7 @@
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Header from './Components/Header';
+import LoginSignup from './Components/LoginSignup/LoginSignup';
 
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
@@ -19,6 +20,7 @@ function App() {
           <Route path="/favorites" element={<Favorites />} />
           <Route path="/bag" element={<Bag />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/login" element={<LoginSignup />} />
         </Routes>
       </div>
     </Router>
