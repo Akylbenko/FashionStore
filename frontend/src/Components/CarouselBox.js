@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import { Carousel, CarouselCaption, CarouselItem } from 'react-bootstrap'
-import slider1Img from '../assets/slider1.jpg'
-import slider2Img from '../assets/slider2.jpg'
-import slider3Img from '../assets/slider3.jpg'
+import slider1Img from '../Components/assets/slider1.jpg'
+import slider2Img from '../Components/assets/slider2.jpg'
+import slider3Img from '../Components/assets/slider3.jpg'
 
 export default class CarouselBox extends Component {
   render() {
