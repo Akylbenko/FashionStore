@@ -1,48 +1,87 @@
-import React from "react"
-import { logout } from '../services/auth'
-import { useEffect, useState } from 'react'
-import api from '../services/api'
+import { useState, useEffect } from "react"
+import api from "../services/api"
+import { Container, Card, Button, Form } from "react-bootstrap"
 
 export default function Profile() {
   const [user, setUser] = useState(null)
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState("")
+  const [editing, setEditing] = useState(false)
 
   useEffect(() => {
-    const fetchProfile = async () => {
-      try {
-        const response = await api.get("/api/me/")
-        setUser(response.data)
-      } catch (err) {
-        setError("Не удалось загрузить профиль")
-      } finally {
-        setLoading(false)
-      }
-    }
-
     fetchProfile()
   }, [])
 
-  if (loading) return <h2>Загрузка профиля...</h2>
+  const fetchProfile = async () => {
+    try {
+      const response = await api.get("/api/me/")
+      setUser(response.data)
+    } catch (err) {
+      console.log(err)
+    }
+  }
 
-  if (error) return <h2>{error}</h2>
+  const handleChange = (e) => {
+    setUser({
+      ...user,
+      [e.target.name]: e.target.value
+    })
+  }
+
+  const saveProfile = async () => {
+    try {
+      await api.put("/api/profile/", user)
+      setEditing(false)
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
+  if (!user) return <div>Loading...</div>
 
   return (
-    <div style={{padding: "40px"}}>
-      <h1>Профиль</h1>
+    <Container style={{ marginTop: "100px", maxWidth: "600px" }}>
+      <Card className="p-4">
 
-      <button onClick={logout}>
-        Выйти
-      </button>
+        <h2>Профиль</h2>
 
-      {user && (
-        <>
-          <p>ID: {user.id}</p>
-          <p>Username: {user.username}</p>
-        </>
-      )}
-      
-    </div>
-    
+        {editing ? (
+          <>
+            <Form.Group>
+              <Form.Label>Username</Form.Label>
+              <Form.Control
+                name="username"
+                value={user.username}
+                onChange={handleChange}
+              />
+            </Form.Group>
+
+            <Form.Group className="mt-3">
+              <Form.Label>Email</Form.Label>
+              <Form.Control
+                name="email"
+                value={user.email || ""}
+                onChange={handleChange}
+              />
+            </Form.Group>
+
+            <Button
+              className="mt-3"
+              onClick={saveProfile}
+            >
+              Сохранить
+            </Button>
+          </>
+        ) : (
+          <>
+            <p><strong>Username:</strong> {user.username}</p>
+            <p><strong>Email:</strong> {user.email}</p>
+
+            <Button onClick={() => setEditing(true)}>
+              Редактировать профиль
+            </Button>
+          </>
+        )}
+
+      </Card>
+    </Container>
   )
 }
