@@ -3,13 +3,15 @@ import './LoginSignup.css'
 import user_icon from '../assets/person.png'
 import password_icon from '../assets/password.png'
 import api from '../../services/api'
+import { useNavigate } from 'react-router-dom'
 
 export default function LoginSignup() {
 
   const [action, setAction] = useState("Вход")
-
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
+
+  const navigate = useNavigate()
 
   const login = async () => {
     try {
@@ -22,6 +24,8 @@ export default function LoginSignup() {
       localStorage.setItem("refresh", response.data.refresh)
 
       alert("Успешный вход!")
+
+      navigate("/profile")
 
     } catch (error) {
       alert("Ошибка входа")
@@ -79,21 +83,28 @@ export default function LoginSignup() {
         </div>
 
         <div className='submit-container'>
-          {/* Левая кнопка - для регистрации */}
+
           <div
-            className={action === "Вход" ? "submit gray" : "submit"}
-            onClick={() => action === "Регистрация" ? register : setAction("Регистрация")}
+            className={action === "Регистрация" ? "submit" : "submit gray"}
+            onClick={() => setAction("Регистрация")}
           >
-            Зарегистрироваться
+            Регистрация
           </div>
 
-          {/* Правая кнопка - для входа */}
           <div
-            className={action === "Регистрация" ? "submit gray" : "submit"}
-            onClick={() => action === "Вход" ? login : setAction("Вход")}
+            className={action === "Вход" ? "submit" : "submit gray"}
+            onClick={() => setAction("Вход")}
           >
-            Войти
+            Вход
           </div>
+
+          <button
+            style={{ marginTop: "20px" }}
+            onClick={action === "Вход" ? login : register}
+          >
+            {action === "Вход" ? "Войти" : "Зарегистрироваться"}
+          </button>
+
         </div>
 
       </div>

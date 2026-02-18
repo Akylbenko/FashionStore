@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from rest_framework import viewsets, status
 from .models import Product
-from .serializers import ProductSerializer
+from .serializers import ProductSerializer, UserSerializer
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
@@ -28,3 +28,9 @@ def register_view(request):
 
     user = User.objects.create_user(username=username, password=password)
     return Response({"message": "Пользователь создан"}, status=201)
+
+@api_view(["GET"])
+@permission_classes([IsAuthenticated])
+def me_view(request):
+    serializer = UserSerializer(request.user)
+    return Response(serializer.data)
