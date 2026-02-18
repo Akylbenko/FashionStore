@@ -1,30 +1,31 @@
-import React, { useState } from 'react'
-import './LoginSignup.css'
-import user_icon from '../assets/person.png'
-import password_icon from '../assets/password.png'
-import api from '../../services/api'
-import { useNavigate } from 'react-router-dom'
+import React, { useState, useContext } from "react"
+import "./LoginSignup.css"
+import user_icon from "../assets/person.png"
+import password_icon from "../assets/password.png"
+import api from "../../services/api"
+import { useNavigate } from "react-router-dom"
+import { AuthContext } from "../../context/AuthContext"
 
 export default function LoginSignup() {
-
   const [action, setAction] = useState("Вход")
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
 
   const navigate = useNavigate()
+  const { login: authLogin } = useContext(AuthContext) // ← используем context
 
-  const login = async () => {
+  // LOGIN
+  const handleLogin = async () => {
     try {
       const response = await api.post("/api/token/", {
         username,
-        password
+        password,
       })
 
-      localStorage.setItem("access", response.data.access)
-      localStorage.setItem("refresh", response.data.refresh)
+      // сохраняем токены через context
+      authLogin(response.data.access, response.data.refresh)
 
       alert("Успешный вход!")
-
       navigate("/profile")
 
     } catch (error) {
@@ -33,11 +34,12 @@ export default function LoginSignup() {
     }
   }
 
+  // REGISTER
   const register = async () => {
     try {
       await api.post("/api/register/", {
         username,
-        password
+        password,
       })
 
       alert("Регистрация успешна! Теперь войдите.")
@@ -50,31 +52,31 @@ export default function LoginSignup() {
   }
 
   return (
-    <div className='login-page'>
-      <div className='auth-container'>
+    <div className="login-page">
+      <div className="auth-container">
 
-        <div className='header'>
-          <div className='text'>{action}</div>
-          <div className='underline'></div>
+        <div className="header">
+          <div className="text">{action}</div>
+          <div className="underline"></div>
         </div>
 
-        <div className='inputs'>
+        <div className="inputs">
 
-          <div className='input'>
+          <div className="input">
             <img src={user_icon} alt="" />
             <input
               type="text"
-              placeholder='Username'
+              placeholder="Имя"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
             />
           </div>
 
-          <div className='input'>
+          <div className="input">
             <img src={password_icon} alt="" />
             <input
               type="password"
-              placeholder='Пароль'
+              placeholder="Пароль"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
@@ -82,7 +84,7 @@ export default function LoginSignup() {
 
         </div>
 
-        <div className='submit-container'>
+        <div className="submit-container">
 
           <div
             className={action === "Регистрация" ? "submit" : "submit gray"}
@@ -100,7 +102,7 @@ export default function LoginSignup() {
 
           <button
             style={{ marginTop: "20px" }}
-            onClick={action === "Вход" ? login : register}
+            onClick={action === "Вход" ? handleLogin : register}
           >
             {action === "Вход" ? "Войти" : "Зарегистрироваться"}
           </button>
