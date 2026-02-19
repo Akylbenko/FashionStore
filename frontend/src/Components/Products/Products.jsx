@@ -1,9 +1,12 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState, useContext } from "react"
 import api from "../../services/api"
 import "./Products.css"
+import { BagContext } from "../../context/BagContext" 
 
 export default function Products() {
   const [products, setProducts] = useState([])
+
+  const { addToBag } = useContext(BagContext)
 
   useEffect(() => {
     fetchProducts()
@@ -17,12 +20,12 @@ export default function Products() {
       console.log(err)
     }
   }
+
   const addToFavorites = async (productId) => {
     try {
       await api.post("/api/favorites/", {
         product: productId
       })
-
       alert("Добавлено в избранное ❤️")
     } catch (err) {
       alert("Ошибка")
@@ -39,9 +42,15 @@ export default function Products() {
           <p>{product.description}</p>
           <p>Цена: {product.price} ₽</p>
           <p>В наличии: {product.stock}</p>
+
           <button onClick={() => addToFavorites(product.id)}>
             ❤️ В избранное
           </button>
+
+          <button onClick={() => addToBag(product)}>
+            🛒 Купить
+          </button>
+
         </div>
       ))}
     </div>

@@ -38,6 +38,7 @@ export default function Header() {
         <Navbar.Collapse>
           <Nav className="me-auto">
             <Nav.Link as={Link} to="/">Главная</Nav.Link>
+            <Nav.Link as={Link} to="/products">Каталог</Nav.Link>
             <Nav.Link as={Link} to="/favorites">Избранное</Nav.Link>
             <Nav.Link as={Link} to="/bag">Корзина</Nav.Link>
             <Nav.Link as={Link} to="/profile">Профиль</Nav.Link>
