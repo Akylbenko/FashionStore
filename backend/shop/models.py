@@ -13,3 +13,10 @@ class Product(models.Model):
 
     def __str__(self):
         return self.title
+
+class Favorite(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="favorites")
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name="favorite_by")
+
+    class Meta:
+        unique_together = ("user", "product")

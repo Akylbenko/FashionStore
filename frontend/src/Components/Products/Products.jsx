@@ -17,6 +17,17 @@ export default function Products() {
       console.log(err)
     }
   }
+  const addToFavorites = async (productId) => {
+    try {
+      await api.post("/api/favorites/", {
+        product: productId
+      })
+
+      alert("Добавлено в избранное ❤️")
+    } catch (err) {
+      alert("Ошибка")
+    }
+  }
 
   return (
     <div className="products-container">
@@ -28,6 +39,9 @@ export default function Products() {
           <p>{product.description}</p>
           <p>Цена: {product.price} ₽</p>
           <p>В наличии: {product.stock}</p>
+          <button onClick={() => addToFavorites(product.id)}>
+            ❤️ В избранное
+          </button>
         </div>
       ))}
     </div>

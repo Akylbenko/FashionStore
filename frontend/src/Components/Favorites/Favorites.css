@@ -1,0 +1,25 @@
+.favorites-container {
+  margin-top: 100px;
+  padding: 20px;
+}
+
+.favorite-card {
+  border: 1px solid #ccc;
+  padding: 15px;
+  margin-bottom: 15px;
+  border-radius: 10px;
+  background: white;
+}
+
+.favorite-title {
+  margin-bottom: 8px;
+}
+
+.favorite-description {
+  margin-bottom: 8px;
+}
+
+.favorite-price {
+  font-weight: bold;
+  color: #333;
+}
