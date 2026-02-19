@@ -5,11 +5,11 @@ import { BagContext } from "../../context/BagContext"
 
 export default function Products() {
   const [products, setProducts] = useState([])
-
-  const { addToBag } = useContext(BagContext)
+  const [favorites, setFavorites] = useState([]) 
 
   useEffect(() => {
     fetchProducts()
+    fetchFavorites()
   }, [])
 
   const fetchProducts = async () => {
@@ -20,13 +20,47 @@ export default function Products() {
       console.log(err)
     }
   }
+  const { bag, addToBag } = useContext(BagContext)
 
-  const addToFavorites = async (productId) => {
+  const isInBag = (productId) => {
+    return bag.some(item => item.id === productId)
+  }
+
+  useEffect(() => {
+    fetchProducts()
+  }, [])
+
+  const fetchFavorites = async () => {
     try {
-      await api.post("/api/favorites/", {
-        product: productId
-      })
-      alert("Добавлено в избранное ❤️")
+      const res = await api.get("/api/favorites/")
+      const ids = res.data.map(item => item.product.id)
+      setFavorites(ids)
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
+  const isFavorite = (productId) => {
+    return favorites.includes(productId)
+  }
+
+  const toggleFavorite = async (productId) => {
+    try {
+      if (isFavorite(productId)) {
+        await api.post("/api/favorites/remove/", {
+          product: productId
+        })
+
+        setFavorites(prev => prev.filter(id => id !== productId))
+
+      } else {
+        await api.post("/api/favorites/", {
+          product_id: productId
+        })
+
+        setFavorites(prev => [...prev, productId])
+      }
+
     } catch (err) {
       alert("Ошибка")
     }
@@ -43,14 +77,19 @@ export default function Products() {
           <p>Цена: {product.price} ₽</p>
           <p>В наличии: {product.stock}</p>
 
-          <button onClick={() => addToFavorites(product.id)}>
-            ❤️ В избранное
+          <button onClick={() => toggleFavorite(product.id)}>
+            {isFavorite(product.id)
+              ? "💔 Убрать из избранного"
+              : "❤️ В избранное"}
           </button>
-
-          <button onClick={() => addToBag(product)}>
-            🛒 Купить
+          <button
+            onClick={() => addToBag(product)}
+            disabled={isInBag(product.id)}
+          >
+            {isInBag(product.id)
+              ? "✅ В корзине"
+              : "🛒 Купить"}
           </button>
-
         </div>
       ))}
     </div>

@@ -2,7 +2,7 @@ from django.shortcuts import render
 from rest_framework import viewsets, status
 from .models import Product, Favorite
 from .serializers import ProductSerializer, UserSerializer, FavoriteSerializer
-from rest_framework.decorators import api_view, permission_classes
+from rest_framework.decorators import api_view, permission_classes, action
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from django.contrib.auth.models import User
@@ -25,6 +25,21 @@ class FavoriteViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
+
+    @action(detail=False, methods=["post"])
+    def remove(self, request):
+        product_id = request.data.get("product")
+
+        favorite = Favorite.objects.filter(
+            user=request.user,
+            product_id=product_id
+        ).first()
+
+        if favorite:
+            favorite.delete()
+            return Response({"message": "Удалено"})
+
+        return Response({"error": "Нет в избранном"}, status=404)
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])

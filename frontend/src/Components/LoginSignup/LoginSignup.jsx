@@ -12,9 +12,8 @@ export default function LoginSignup() {
   const [password, setPassword] = useState("")
 
   const navigate = useNavigate()
-  const { login: authLogin } = useContext(AuthContext) // ← используем context
+  const { login: authLogin } = useContext(AuthContext)
 
-  // LOGIN
   const handleLogin = async () => {
     try {
       const response = await api.post("/api/token/", {
@@ -22,7 +21,6 @@ export default function LoginSignup() {
         password,
       })
 
-      // сохраняем токены через context
       authLogin(response.data.access, response.data.refresh)
 
       alert("Успешный вход!")
@@ -34,7 +32,6 @@ export default function LoginSignup() {
     }
   }
 
-  // REGISTER
   const register = async () => {
     try {
       await api.post("/api/register/", {
@@ -50,6 +47,22 @@ export default function LoginSignup() {
       console.log(error.response?.data)
     }
   }
+
+  const handleAuthClick = () => {
+  if (action === "Вход") {
+    handleLogin()
+  } else {
+    register()
+  }
+}
+
+const handleModeClick = (mode) => {
+  if (action === mode) {
+    handleAuthClick()
+  } else {
+    setAction(mode)
+  }
+}
 
   return (
     <div className="login-page">
@@ -88,24 +101,17 @@ export default function LoginSignup() {
 
           <div
             className={action === "Регистрация" ? "submit" : "submit gray"}
-            onClick={() => setAction("Регистрация")}
+            onClick={() => handleModeClick("Регистрация")}
           >
             Регистрация
           </div>
 
           <div
             className={action === "Вход" ? "submit" : "submit gray"}
-            onClick={() => setAction("Вход")}
+            onClick={() => handleModeClick("Вход")}
           >
             Вход
           </div>
-
-          <button
-            style={{ marginTop: "20px" }}
-            onClick={action === "Вход" ? handleLogin : register}
-          >
-            {action === "Вход" ? "Войти" : "Зарегистрироваться"}
-          </button>
 
         </div>
 
