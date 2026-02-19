@@ -2,14 +2,16 @@ import './App.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import Header from './Components/Header'
 import LoginSignup from './Components/LoginSignup/LoginSignup'
+import AddProduct from './Components/AddProduct/AddProduct'
+import Products from './Components/Products/Products'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import ProtectedRoute from './Components/ProtectedRoute'
 import { AuthProvider } from './context/AuthContext' 
-
 import Home from './Pages/Home'
 import Favorites from './Pages/Favorites'
 import Bag from './Pages/Bag'
 import Profile from './Pages/Profile'
+
 
 function App() {
   return (
@@ -21,6 +23,8 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/favorites" element={<Favorites />} />
             <Route path="/bag" element={<Bag />} />
+            <Route path="/add-product" element={<AddProduct />} />
+            <Route path="/products" element={<Products />} />
             <Route
               path="/profile"
               element={
