@@ -8,6 +8,7 @@ export default function AddProduct() {
   const [price, setPrice] = useState("")
   const [description, setDescription] = useState("")
   const [stock, setStock] = useState(1)
+  const [image, setImage] = useState(null) 
 
   const navigate = useNavigate()
 
@@ -15,16 +16,24 @@ export default function AddProduct() {
     e.preventDefault()
 
     try {
-      await api.post("/api/products/", {
-        title,
-        price,
-        description,
-        stock
+      const formData = new FormData()
+
+      formData.append("title", title)
+      formData.append("price", price)
+      formData.append("description", description)
+      formData.append("stock", stock)
+      formData.append("image", image) 
+
+      await api.post("/api/products/", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data"
+        }
       })
 
       alert("Товар добавлен")
       navigate("/")
     } catch (err) {
+      console.log(err)
       alert("Ошибка создания товара")
     }
   }
@@ -63,6 +72,12 @@ export default function AddProduct() {
           placeholder="Описание"
           value={description}
           onChange={(e) => setDescription(e.target.value)}
+        />
+
+        <input
+          type="file"
+          accept="image/*"
+          onChange={(e) => setImage(e.target.files[0])}
         />
 
         <button className="add-product-button" type="submit">

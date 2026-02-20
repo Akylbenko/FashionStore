@@ -10,7 +10,7 @@ import { AuthProvider } from './context/AuthContext'
 import { BagProvider } from './context/BagContext' 
 import Home from './Pages/Home'
 import Favorites from './Components/Favorites/Favorites'
-import Bag from './Pages/Bag'
+import Bag from './Components/Bag/Bag'
 import Profile from './Pages/Profile'
 
 function App() {

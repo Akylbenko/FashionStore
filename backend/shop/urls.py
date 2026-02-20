@@ -10,4 +10,4 @@ urlpatterns = router.urls + [
     path('test/', test_view),
     path('register/', register_view),
     path('me/', me_view),
-]   
+]

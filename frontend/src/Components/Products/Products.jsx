@@ -72,6 +72,15 @@ export default function Products() {
 
       {products.map(product => (
         <div className="product-card" key={product.id}>
+          {product.image && (
+            <img
+              src={product.image}
+              alt={product.title}
+              className="product-image"
+            />
+
+          )}  
+
           <h3>{product.title}</h3>
           <p>{product.description}</p>
           <p>Цена: {product.price} ₽</p>

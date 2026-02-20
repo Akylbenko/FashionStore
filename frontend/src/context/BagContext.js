@@ -3,12 +3,10 @@ import { createContext, useState, useEffect } from "react"
 export const BagContext = createContext()
 
 export const BagProvider = ({ children }) => {
-  const [bag, setBag] = useState([])
-
-  useEffect(() => {
-    const saved = JSON.parse(localStorage.getItem("bag")) || []
-    setBag(saved)
-  }, [])
+  const [bag, setBag] = useState(() => {
+    const saved = localStorage.getItem("bag")
+    return saved ? JSON.parse(saved) : []
+  })
 
   useEffect(() => {
     localStorage.setItem("bag", JSON.stringify(bag))
@@ -23,13 +21,7 @@ export const BagProvider = ({ children }) => {
   }
 
   return (
-    <BagContext.Provider
-      value={{
-        bag, 
-        addToBag,
-        removeFromBag
-      }}
-    >
+    <BagContext.Provider value={{ bag, addToBag, removeFromBag }}>
       {children}
     </BagContext.Provider>
   )

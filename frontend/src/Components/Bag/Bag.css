@@ -1,22 +1,29 @@
-.products-container {
+.bag-container {
   margin-top: 100px;
   padding: 20px;
 }
 
-.product-card {
+.bag-card {
   border: 1px solid #ccc;
   padding: 15px;
   margin-bottom: 15px;
-  border-radius: 8px;
+  border-radius: 10px;
   background: white;
-  transition: 0.2s;
 }
 
-.product-card:hover {
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+.bag-title {
+  margin-bottom: 8px;
 }
 
-.product-image {
+.bag-description {
+  margin-bottom: 8px;
+}
+
+.bag-price {
+  font-weight: bold;
+  color: #333;
+}
+.bag-image {
   width: 200px;
   height: 200px;
   object-fit: cover;
