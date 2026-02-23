@@ -65,9 +65,13 @@ export default function Favorites() {
               {item.product.description}
             </p>
 
-            <p className="favorite-price">
-              {item.product.price} ₽
-            </p>
+          <p className="favorite-price">
+            Цена: {item.product.price} ₽
+          </p>
+
+          <p className="favorite-stock">
+            В наличии: {item.product.stock}
+          </p>
 
             <div className="favorite-buttons">
               <button

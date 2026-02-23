@@ -1,6 +1,7 @@
 import { useEffect, useState, useContext } from "react"
 import api from "../../services/api"
 import "./Products.css"
+import "../Favorites/Favorites.css"
 import { BagContext } from "../../context/BagContext" 
 
 export default function Products() {
@@ -74,27 +75,42 @@ export default function Products() {
         </div>
       <div className="products-grid">
         {products.map(product => (
-          <div className="product-card" key={product.id}>
+          <div className="favorite-card" key={product.id}>
             {product.image && (
               <img
                 src={product.image}
                 alt={product.title}
-                className="product-image"
+                className="favorite-image"
               />
             )}
 
-            <h3>{product.title}</h3>
-            <p>{product.description}</p>
-            <p>Цена: {product.price} ₽</p>
-            <p>В наличии: {product.stock}</p>
-            <div className="product-buttons">
-              <button onClick={() => toggleFavorite(product.id)}>
+            <h3 className="favorite-title-text">
+              {product.title}
+            </h3>
+
+            <p className="favorite-description">
+              {product.description}
+            </p>
+
+            <p className="favorite-price">
+              Цена: {product.price} ₽
+            </p>
+
+            <p className="favorite-stock">
+              В наличии: {product.stock}
+            </p>
+            <div className="favorite-buttons">
+              <button
+                className="remove-btn"
+                onClick={() => toggleFavorite(product.id)}
+              >
                 {isFavorite(product.id)
-                  ? "💔 Убрать из избранного"
-                  : "❤️ В избранное"}
+                  ? "💔 Удалить"
+                  : "❤️ Добавить"}
               </button>
 
               <button
+                className="buy-btn"
                 onClick={() => addToBag(product)}
                 disabled={isInBag(product.id)}
               >

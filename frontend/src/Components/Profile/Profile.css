@@ -1,0 +1,40 @@
+.profile-container {
+  margin-top: 120px;
+  display: flex;
+  justify-content: center;
+}
+
+.profile-card {
+  width: 500px;
+  padding: 30px;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+}
+
+.profile-title {
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+.avatar-section {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.profile-avatar {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 15px;
+}
+
+.profile-info {
+  margin-bottom: 20px;
+}
+
+.profile-buttons {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}

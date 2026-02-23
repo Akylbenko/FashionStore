@@ -23,7 +23,6 @@ export default function LoginSignup() {
       })
 
       authLogin(response.data.access, response.data.refresh)
-
       navigate("/profile")
 
     } catch (error) {
@@ -36,11 +35,16 @@ export default function LoginSignup() {
     try {
       await api.post("/api/register/", {
         username,
+        email,
         password,
       })
 
       alert("Регистрация успешна! Теперь войдите.")
       setAction("Вход")
+
+      setUsername("")
+      setPassword("")
+      setEmail("")
 
     } catch (error) {
       alert("Ошибка регистрации")
@@ -49,20 +53,20 @@ export default function LoginSignup() {
   }
 
   const handleAuthClick = () => {
-  if (action === "Вход") {
-    handleLogin()
-  } else {
-    register()
+    if (action === "Вход") {
+      handleLogin()
+    } else {
+      register()
+    }
   }
-}
 
-const handleModeClick = (mode) => {
-  if (action === mode) {
-    handleAuthClick()
-  } else {
-    setAction(mode)
+  const handleModeClick = (mode) => {
+    if (action === mode) {
+      handleAuthClick()
+    } else {
+      setAction(mode)
+    }
   }
-}
 
   return (
     <div className="login-page">
@@ -79,12 +83,22 @@ const handleModeClick = (mode) => {
             <img src={user_icon} alt="" />
             <input
               type="text"
-              placeholder="Имя"
+              placeholder="Имя пользователя"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
             />
           </div>
-
+          {action === "Регистрация" && (
+            <div className="input">
+              <img src={user_icon} alt="" />
+              <input
+                type="email"
+                placeholder="Почта"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+            </div>
+          )}
           <div className="input">
             <img src={password_icon} alt="" />
             <input
@@ -94,7 +108,6 @@ const handleModeClick = (mode) => {
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
-          
         </div>
 
         <div className="submit-container">

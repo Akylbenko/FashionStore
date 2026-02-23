@@ -8,7 +8,7 @@ import {
   Form,
 } from "react-bootstrap"
 import { Link, useNavigate } from "react-router-dom"
-import logo from "../logo192.png"
+import logo from "../assets/logo192.png"
 import { AuthContext } from "../../context/AuthContext"
 import "./Header.css"
 
@@ -32,7 +32,7 @@ export default function Header() {
       <Container>
 
         <Navbar.Brand as={Link} to="/" className="d-flex align-items-center">
-          <img src={logo} height={30} width={30} alt="logo" />
+          <img src={logo} height={50} width={60} alt="logo" />
           <span className="brand">Indie-Ease</span>
         </Navbar.Brand>
 

@@ -70,6 +70,12 @@
   margin-bottom: 15px;
 }
 
+.favorite-stock {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 15px;
+}
+
 .favorite-buttons {
   margin-top: auto;
   display: flex;

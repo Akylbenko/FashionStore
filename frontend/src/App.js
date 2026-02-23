@@ -11,7 +11,7 @@ import { BagProvider } from './context/BagContext'
 import Home from './Pages/Home'
 import Favorites from './Components/Favorites/Favorites'
 import Bag from './Components/Bag/Bag'
-import Profile from './Pages/Profile'
+import Profile from './/Components/Profile/Profile'
 
 function App() {
   return (
