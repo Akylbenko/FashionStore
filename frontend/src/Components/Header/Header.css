@@ -1,0 +1,63 @@
+/* стеклянный navbar */
+.custom-navbar {
+  background: rgba(20, 20, 20, 0.85) !important;
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  padding: 12px 0;
+}
+
+.brand {
+  font-size: 22px;
+  font-weight: 600;
+  margin-left: 10px;
+  letter-spacing: 1px;
+}
+
+.nav-link-custom {
+  margin: 0 10px;
+  font-size: 15px;
+  position: relative;
+  transition: 0.3s ease;
+}
+
+.nav-link-custom::after {
+  content: "";
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  width: 0%;
+  height: 2px;
+  background: white;
+  transition: 0.3s ease;
+}
+
+.nav-link-custom:hover::after {
+  width: 100%;
+}
+
+.header-btn {
+  border-radius: 20px !important;
+  padding: 6px 22px !important;
+  font-size: 14px;
+  transition: 0.3s ease;
+}
+
+.header-btn:hover {
+  transform: translateY(-2px);
+}
+
+.search-input {
+  border-radius: 20px !important;
+  padding-left: 15px;
+  background: rgba(255,255,255,0.1);
+  border: none !important;
+  color: white !important;
+}
+
+.search-input::placeholder {
+  color: rgba(255,255,255,0.6);
+}
+
+.search-btn {
+  border-radius: 20px !important;
+}

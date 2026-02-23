@@ -28,8 +28,19 @@ export default function Profile() {
 
   const saveProfile = async () => {
     try {
-      await api.put("/api/profile/", user)
+      const formData = new FormData()
+
+      for (let key in user) {
+        formData.append(key, user[key])
+      }
+
+      await api.put("/api/me/", formData, {
+        headers: { "Content-Type": "multipart/form-data" }
+      })
+
       setEditing(false)
+      fetchProfile()
+
     } catch (err) {
       console.log(err)
     }
@@ -49,7 +60,7 @@ export default function Profile() {
               <Form.Label>Username</Form.Label>
               <Form.Control
                 name="username"
-                value={user.username}
+                value={user.username || ""}
                 onChange={handleChange}
               />
             </Form.Group>
@@ -63,22 +74,48 @@ export default function Profile() {
               />
             </Form.Group>
 
-            <Button
-              className="mt-3"
-              onClick={saveProfile}
-            >
+            <Form.Group className="mt-3">
+              <Form.Label>Аватар</Form.Label>
+              <Form.Control
+                type="file"
+                onChange={(e) =>
+                  setUser({
+                    ...user,
+                    avatar: e.target.files[0]
+                  })
+                }
+              />
+            </Form.Group>
+
+            <Button className="mt-3" onClick={saveProfile}>
               Сохранить
             </Button>
           </>
         ) : (
           <>
+            {user.avatar && (
+              <img
+                src={user.avatar}
+                alt="avatar"
+                style={{
+                  width: 120,
+                  height: 120,
+                  borderRadius: "50%",
+                  objectFit: "cover",
+                  marginBottom: 20
+                }}
+              />
+            )}
+
             <p><strong>Username:</strong> {user.username}</p>
             <p><strong>Email:</strong> {user.email}</p>
+            <p><strong>Дата регистрации:</strong> {user.created_at}</p>
 
             <Button onClick={() => setEditing(true)}>
               Редактировать профиль
             </Button>
           </>
+            
         )}
 
       </Card>

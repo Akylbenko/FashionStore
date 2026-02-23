@@ -68,39 +68,44 @@ export default function Products() {
 
   return (
     <div className="products-container">
-      <h1>Товары</h1>
-
-      {products.map(product => (
-        <div className="product-card" key={product.id}>
-          {product.image && (
-            <img
-              src={product.image}
-              alt={product.title}
-              className="product-image"
-            />
-
-          )}  
-
-          <h3>{product.title}</h3>
-          <p>{product.description}</p>
-          <p>Цена: {product.price} ₽</p>
-          <p>В наличии: {product.stock}</p>
-
-          <button onClick={() => toggleFavorite(product.id)}>
-            {isFavorite(product.id)
-              ? "💔 Убрать из избранного"
-              : "❤️ В избранное"}
-          </button>
-          <button
-            onClick={() => addToBag(product)}
-            disabled={isInBag(product.id)}
-          >
-            {isInBag(product.id)
-              ? "✅ В корзине"
-              : "🛒 Купить"}
-          </button>
+        <div className="products-header">
+          <h1>Товары</h1>
+          <div className="products-line"></div>
         </div>
-      ))}
+      <div className="products-grid">
+        {products.map(product => (
+          <div className="product-card" key={product.id}>
+            {product.image && (
+              <img
+                src={product.image}
+                alt={product.title}
+                className="product-image"
+              />
+            )}
+
+            <h3>{product.title}</h3>
+            <p>{product.description}</p>
+            <p>Цена: {product.price} ₽</p>
+            <p>В наличии: {product.stock}</p>
+            <div className="product-buttons">
+              <button onClick={() => toggleFavorite(product.id)}>
+                {isFavorite(product.id)
+                  ? "💔 Убрать из избранного"
+                  : "❤️ В избранное"}
+              </button>
+
+              <button
+                onClick={() => addToBag(product)}
+                disabled={isInBag(product.id)}
+              >
+                {isInBag(product.id)
+                  ? "✅ В корзине"
+                  : "🛒 Купить"}
+              </button>
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
   )
 }

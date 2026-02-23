@@ -10,6 +10,7 @@ export default function LoginSignup() {
   const [action, setAction] = useState("Вход")
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
+  const [email, setEmail] = useState("")
 
   const navigate = useNavigate()
   const { login: authLogin } = useContext(AuthContext)
@@ -23,7 +24,6 @@ export default function LoginSignup() {
 
       authLogin(response.data.access, response.data.refresh)
 
-      alert("Успешный вход!")
       navigate("/profile")
 
     } catch (error) {
@@ -94,7 +94,7 @@ const handleModeClick = (mode) => {
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
-
+          
         </div>
 
         <div className="submit-container">

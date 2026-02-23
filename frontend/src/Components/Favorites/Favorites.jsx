@@ -20,19 +20,20 @@ export default function Favorites() {
   }
 
   const removeFromFavorites = async (productId) => {
-  try {
-    await api.post("/api/favorites/remove/", {
-      product: productId
-    })
+    try {
+      await api.post("/api/favorites/remove/", {
+        product: productId
+      })
 
-    setFavorites(prev =>
-      prev.filter(item => item.product.id !== productId)
-    )
+      setFavorites(prev =>
+        prev.filter(item => item.product.id !== productId)
+      )
 
-  } catch (err) {
-    alert("Ошибка удаления")
+    } catch (err) {
+      alert("Ошибка удаления")
+    }
   }
-} 
+
   const { bag, addToBag } = useContext(BagContext)
 
   const isInBag = (productId) => {
@@ -41,44 +42,54 @@ export default function Favorites() {
 
   return (
     <div className="favorites-container">
-      <h1>Избранное ❤️</h1>
+      <div className="favorites-header">
+        <h1>Избранное ❤️</h1>
+        <div className="favorites-line"></div>
+      </div>
+      <div className="favorites-grid">
+        {favorites.map(item => (
+          <div className="favorite-card" key={item.id}>
+            {item.product.image && (
+              <img
+                src={item.product.image}
+                alt={item.product.title}
+                className="favorite-image"
+              />
+            )}
 
-      {favorites.map(item => (
-        <div className="favorite-card" key={item.id}>
-          {item.product.image && (
-            <img
-              src={item.product.image}
-              alt={item.product.title}
-              className="product-image"
-            />
+            <h3 className="favorite-title-text">
+              {item.product.title}
+            </h3>
 
-          )}
-          <h3 className="favorite-title">
-            {item.product.title}
-          </h3>
+            <p className="favorite-description">
+              {item.product.description}
+            </p>
 
-          <p className="favorite-description">
-            {item.product.description}
-          </p>
+            <p className="favorite-price">
+              {item.product.price} ₽
+            </p>
 
-          <p className="favorite-price">
-            {item.product.price} ₽
-          </p>
-          <button
-            onClick={() => removeFromFavorites(item.product.id)}
-          >
-            💔 Удалить из избранного
-          </button>
-          <button
-            onClick={() => addToBag(item.product)}
-            disabled={isInBag(item.product.id)}
-          >
-            {isInBag(item.product.id)
-              ? "✅ В корзине"
-              : "🛒 Купить"}
-          </button>
-        </div>
-      ))}
+            <div className="favorite-buttons">
+              <button
+                className="remove-btn"
+                onClick={() => removeFromFavorites(item.product.id)}
+              >
+                💔 Удалить
+              </button>
+
+              <button
+                className="buy-btn"
+                onClick={() => addToBag(item.product)}
+                disabled={isInBag(item.product.id)}
+              >
+                {isInBag(item.product.id)
+                  ? "✅ В корзине"
+                  : "🛒 Купить"}
+              </button>
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
   )
 }

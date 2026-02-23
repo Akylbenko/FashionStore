@@ -20,3 +20,11 @@ class Favorite(models.Model):
 
     class Meta:
         unique_together = ("user", "product")
+
+class Profile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    avatar = models.ImageField(upload_to="avatars/", null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.user.username

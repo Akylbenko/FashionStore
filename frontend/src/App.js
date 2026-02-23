@@ -1,6 +1,6 @@
 import './App.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
-import Header from './Components/Header'
+import Header from './Components/Header/Header'
 import LoginSignup from './Components/LoginSignup/LoginSignup'
 import AddProduct from './Components/AddProduct/AddProduct'
 import Products from './Components/Products/Products'
